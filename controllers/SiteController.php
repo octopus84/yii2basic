@@ -9,19 +9,43 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\ValidarFormulario;
+use app\models\EntryForm;
+use app\models\Validador;
+use app\models\ValidadorForm;
 
 class SiteController extends Controller
 {
-    public function actionSaluda($get="Bienvenidos a Tutorial Yii2"){
-        $mensaje ="Bienvenido a yii, ";
-        $nombres = ["Octavio","Vanessa","Isidora","Muriel","Amador"];
-        return $this->render("saluda",
-            ["mensaje"=>$mensaje,
-            "nombres"=>$nombres,
-            "get2"=>$get
-        ]);
+    public function actionEntry(){
+        $model = new EntryForm;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // validar los datos recibidos en el modelo
+            // aquí haz algo significativo con el modelo ...
+            return $this->render('entry-confirm', ['model' => $model]);
+        } else {
+            // la página es mostrada inicialmente o hay algún error de validación
+            return $this->render('entry', ['model' => $model]);
+        }
     }
+
+    public function actionValidador(){
+        $model = new Validador;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('confirma', ['model' => $model]);
+        }else{
+            return $this->render('validador', ['model' => $model]);
+        }
+        
+    }    
+    
+    public function actionValidadorForm(){
+        $model = new ValidadorForm;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('confirma', ['model' => $model]);
+        }else{
+            return $this->render('validadorform', ['model' => $model]);
+        }
+        
+    }  
 
     public function actionFormulario($mensaje = "Bienvenido a Tuturial Yii2 - Segunda parte"){
         return $this->render("formulario",["mensaje"=>$mensaje]);
@@ -36,22 +60,15 @@ class SiteController extends Controller
         return $this->redirect(["site/formulario","mensaje"=>$mensaje]);
     }
 
-    public function actionValidarFormulario(){
-        $model = new ValidarFormulario();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                throw new \yii\web\NotFoundHttpException();
-            }else {
-                $model->getErrors();
-            }
-        }
-        //return $this->render("validarformulario",["model"=>$model,]);
-        return $this->render("validarformulario");
-    }    
-
-
-    
-
+    public function actionSaluda($get="Bienvenidos a Tutorial Yii2"){
+        $mensaje ="Bienvenido a yii, ";
+        $nombres = ["Octavio","Vanessa","Isidora","Muriel","Amador"];
+        return $this->render("saluda",
+            ["mensaje"=>$mensaje,
+            "nombres"=>$nombres,
+            "get2"=>$get
+        ]);
+    }
     /**
      * {@inheritdoc}
      */
