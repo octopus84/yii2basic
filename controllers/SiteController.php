@@ -22,6 +22,9 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionFormulario($mensaje = "Bienvenido a Tuturial Yii2 - Segunda parte"){
+        return $this->render("formulario",["mensaje"=>$mensaje]);
+    }
 
     /**
      * {@inheritdoc}
