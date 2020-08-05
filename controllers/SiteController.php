@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\ValidarFormulario;
 
 class SiteController extends Controller
 {
@@ -26,6 +27,31 @@ class SiteController extends Controller
         return $this->render("formulario",["mensaje"=>$mensaje]);
     }
 
+    /*action para formulario*/
+    public function actionRequest(){
+        $mensaje =null;
+        if (isset($_REQUEST["nombre"])) {
+            $mensaje = "Has enviado tu nombre correctamente ".$_REQUEST["nombre"] ;
+        }
+        return $this->redirect(["site/formulario","mensaje"=>$mensaje]);
+    }
+
+    public function actionValidarFormulario(){
+        $model = new ValidarFormulario();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                throw new \yii\web\NotFoundHttpException();
+            }else {
+                $model->getErrors();
+            }
+        }
+        //return $this->render("validarformulario",["model"=>$model,]);
+        return $this->render("validarformulario");
+    }    
+
+
+    
+
     /**
      * {@inheritdoc}
      */
@@ -33,7 +59,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -44,7 +70,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],

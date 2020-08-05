@@ -1,8 +1,8 @@
-<h1><?=$mensaje?></h1>
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
 ?>
+<h1><?=$mensaje?></h1>
 
 <?= Html::beginForm(
     Url::toRoute("site/request"),//action
@@ -13,8 +13,9 @@ use yii\helpers\Html;
 
 <div class="form-group">
     <?= Html::label("Introduce tu nombre","nombre")?>
-    <?= Html::textInput("Introduce tu nombre","nombre",null,["class"=>"form-inline"])?>
+    <?= Html::textInput("nombre",null,["class"=>"form-inline"])?>
     
+    <?= Html::submitInput("Enviar nombre",["class"=>"btn btn-primary"])?>
 </div>
 
 <?= Html::endForm() ?>
