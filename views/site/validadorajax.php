@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-<h1>Validar Formulario 2</h1>
+<h1>Validar Form Ajax</h1>
 <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nombre')?>

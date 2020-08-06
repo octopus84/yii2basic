@@ -11,10 +11,42 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Validador;
-use app\models\ValidadorForm;
+use app\models\Validadorform;
+use app\models\Validadorajax;
+use app\models\Validarformajax;
+use yii\widgets\ActiveForm;
 
 class SiteController extends Controller
 {
+
+    public function actionValidadorajax(){
+        $model = new Validadorajax;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('validadorajax', ['model' => $model]);
+        }
+        
+    }  
+
+    public function actionValidarformajax(){
+        $model = new Validarformajax();
+        $msg = "Entro!";
+
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax ) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $msg ="Formulario enviado correctamente.";
+                $model->nombre = null;
+                $model->email=null;
+            }else {
+                $model->getErrors();   
+            }
+        }
+        $this->render("validarformajax",["model"=>$model,"msg"=>$msg]);
+    }
+
     public function actionEntry(){
         $model = new EntryForm;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -34,11 +66,10 @@ class SiteController extends Controller
         }else{
             return $this->render('validador', ['model' => $model]);
         }
-        
     }    
     
-    public function actionValidadorForm(){
-        $model = new ValidadorForm;
+    public function actionValidadorform(){
+        $model = new Validadorform;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             return $this->render('confirma', ['model' => $model]);
         }else{

@@ -4,11 +4,11 @@ namespace app\models;
 
 use yii\base\Model;
 
-class Validador extends Model{
+class Validadorajax extends Model{
     public $nombre;
     public $email;
 
-    public function rules()
+  public function rules()
     {
         return [
             ['nombre', 'required', 'message' => 'Campo requerido'],
@@ -28,5 +28,4 @@ class Validador extends Model{
             "email"=>"Email: ",
         ];
     }
-
 }
