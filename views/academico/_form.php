@@ -18,11 +18,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'apemat')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fecha_ingreso')->textInput() ?>
+    <?= $form->field($model, 'fecha_ingreso')->widget(\yii\jui\DatePicker::className(), [
+    // si estás usando bootstrap, la siguiente linea asignará correctamente el estilo del campo de entrada
+    'options' => ['class' => 'form-control'],
+    // ... puedes configurar más propiedades del DatePicker aquí
+    ]) ?>
 
-    <?= $form->field($model, 'estado')->textInput() ?>
+    <?= $form->field($model, 'estado')->dropDownList($model->getEstadoList(), [
+        'prompt' => '(Seleccione)',
+    ]) ?>
 
-    <?= $form->field($model, 'academico_programa_id')->dropDownList($model->getTipoProgramaList(), [
+    <?= $form->field($model, 'academico_id')->dropDownList($model->getTipoProgramaList(), [
         'prompt' => '(Seleccione)',
     ]) ?>
 

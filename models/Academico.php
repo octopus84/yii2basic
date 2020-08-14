@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+
 use Yii;
+use models\AcademicoPrograma;
 
 /**
  * This is the model class for table "academico".
@@ -13,12 +15,18 @@ use Yii;
  * @property string|null $apemat
  * @property string|null $fecha_ingreso
  * @property int|null $estado
+ * 
  */
 class Academico extends \yii\db\ActiveRecord
 {
+    
     /**
      * {@inheritdoc}
      */
+    public $academico_id;
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_INACTIVO = 2;
+
     public static function tableName()
     {
         return 'academico';
@@ -70,6 +78,14 @@ class Academico extends \yii\db\ActiveRecord
             ->orderBy('nombre')
             ->all(), 'id', 'nombre');
     }
+
+    public function getEstadoList()
+	{
+		return [
+            self::ESTADO_ACTIVO => 'Activo',
+            self::ESTADO_INACTIVO => 'Inactivo',
+		];
+	}
 
 
 }
