@@ -43,4 +43,22 @@ class Paises extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
         ];
     }
+
+    /**
+     * Gets query for [[AcademicoProgramas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPaises_Ciudades()
+    {
+        return $this->hasMany(PaisesCiudades::className(), ['paises_id' => 'id']);
+    }
+
+    //ESTO VA EN EL MODELO		
+    public function getTipoCiudadesList()
+    {
+        return \yii\helpers\ArrayHelper::map(Ciudades::find()
+            ->orderBy('ciudad')
+            ->all(), 'paises_iso', 'ciudad');
+    }
 }

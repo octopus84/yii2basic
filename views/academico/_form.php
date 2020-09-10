@@ -22,7 +22,9 @@ use yii\widgets\ActiveForm;
     // si estás usando bootstrap, la siguiente linea asignará correctamente el estilo del campo de entrada
     'options' => ['class' => 'form-control'],
     // ... puedes configurar más propiedades del DatePicker aquí
-    ]) ?>
+    'dateFormat' => 'yyyy-MM-dd',
+    //'dateFormat' => 'dd-MM-yyyy',
+    ])?>
 
     <?= $form->field($model, 'estado')->dropDownList($model->getEstadoList(), [
         'prompt' => '(Seleccione)',

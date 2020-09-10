@@ -16,6 +16,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'paises_id')->dropDownList($model->getTipoCiudadesList(), [
+        'prompt' => '(Seleccione)',
+    ]) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
